@@ -4549,8 +4549,9 @@ Use `ivy-pop-view' to delete any item from `ivy-views'."
   "Switch to BUFFER.
 BUFFER may be a string or nil."
   (if (zerop (length buffer))
-      (switch-to-buffer
-       ivy-text nil 'force-same-window)
+      (let ((switch-to-buffer-obey-display-actions t))
+ 	(switch-to-buffer
+ 	 ivy-text nil 'force-same-window))
     (let ((virtual (assoc buffer ivy--virtual-buffers))
           (view (assoc buffer ivy-views)))
       (cond ((and virtual
@@ -4563,8 +4564,9 @@ BUFFER may be a string or nil."
                    (inhibit-message t))
                (ivy-set-view-recur (cadr view))))
             (t
-             (switch-to-buffer
-              buffer nil 'force-same-window))))))
+ 	     (let ((switch-to-buffer-obey-display-actions t))
+               (switch-to-buffer
+                buffer nil 'force-same-window)))))))
 
 (defun ivy--switch-buffer-other-window-action (buffer)
   "Switch to BUFFER in other window.
