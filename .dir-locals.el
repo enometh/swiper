@@ -3,6 +3,7 @@
 
 ((nil
   (copyright-names-regexp . "Free Software Foundation, Inc\\.")
+  (vc-handled-backends Git)
   (sentence-end-double-space . t))
  (emacs-lisp-mode
   (indent-tabs-mode . nil)
