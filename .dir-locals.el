@@ -9,6 +9,7 @@
   ;; (bug-reference-bug-regexp . "\\(#\\([[:digit:]]+\\)\\)")
   ;; (bug-reference-url-format . "https://github.com/abo-abo/swiper/issues/%s")
   (copyright-names-regexp . "Free Software Foundation, Inc\\.")
+  (vc-handled-backends Git)
   (sentence-end-double-space . t))
  (emacs-lisp-mode
   (indent-tabs-mode . nil)
