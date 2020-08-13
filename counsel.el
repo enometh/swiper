@@ -6664,7 +6664,7 @@ The buffers are those opened during a session of `counsel-switch-buffer'."
            (message ""))))
       (t
        (with-ivy-window
-         (switch-to-buffer (ivy-state-buffer ivy-last)))))))
+         (ivy-switch-to-buffer (ivy-state-buffer ivy-last)))))))
 
 ;;;###autoload
 (defun counsel-switch-buffer ()
