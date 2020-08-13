@@ -4545,12 +4545,28 @@ Use `ivy-pop-view' to delete any item from `ivy-views'."
         ((eq (car view) 'sexp)
          (eval (nth 1 view)))))
 
+
+;;madhu 190405
+(defun ivy-switch-to-buffer (buffer-or-name &optional norecord force-same-window)
+  (let ((buf (if (bufferp buffer-or-name) (buffer-name buffer-or-name) buffer-or-name))
+	blist win newframe)
+    (walk-windows (lambda (win)
+		    (cl-pushnew (buffer-name (window-buffer win)) blist :test #'equal))
+		  nil nil)
+    (cond ((and (setq win (unless (member buf blist) (get-buffer-window buf 0)))
+		(setq newframe (window-frame win)))
+           (make-frame-visible newframe)
+	   (select-frame-set-input-focus newframe)
+	   (select-window win))
+	  (t (switch-to-buffer buffer-or-name norecord force-same-window)))))
+
+
 (defun ivy--switch-buffer-action (buffer)
   "Switch to BUFFER.
 BUFFER may be a string or nil."
   (if (zerop (length buffer))
       (let ((switch-to-buffer-obey-display-actions t))
- 	(switch-to-buffer
+ 	(ivy-switch-to-buffer
  	 ivy-text nil 'force-same-window))
     (let ((virtual (assoc buffer ivy--virtual-buffers))
           (view (assoc buffer ivy-views)))
@@ -4565,7 +4581,7 @@ BUFFER may be a string or nil."
                (ivy-set-view-recur (cadr view))))
             (t
  	     (let ((switch-to-buffer-obey-display-actions t))
-               (switch-to-buffer
+               (ivy-switch-to-buffer
                 buffer nil 'force-same-window)))))))
 
 (defun ivy--switch-buffer-other-window-action (buffer)
