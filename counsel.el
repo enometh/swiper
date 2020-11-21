@@ -2527,7 +2527,7 @@ https://www.freedesktop.org/wiki/Specifications/desktop-bookmark-spec"))
 (defun counsel-recentf ()
   "Find a file on `recentf-list'."
   (interactive)
-  (recentf-mode)
+;;  (recentf-mode)
   (ivy-read "Recentf: " (counsel-recentf-candidates)
             :action (lambda (f)
                       (with-ivy-window
@@ -2616,7 +2616,7 @@ This function uses the `dom' library from Emacs 25.1 or later."
 
 (defun counsel-buffer-or-recentf-candidates ()
   "Return candidates for `counsel-buffer-or-recentf'."
-  (recentf-mode)
+;;  (recentf-mode)
   (let ((buffers (delq nil (mapcar #'buffer-file-name (buffer-list)))))
     (nconc buffers (cl-set-difference (counsel-recentf-candidates)
                                       buffers :test #'equal))))
