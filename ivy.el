@@ -5086,7 +5086,14 @@ Don't finish completion."
 (defun ivy-insert-current-full ()
   "Insert the current directory into the minibuffer."
   (interactive)
-  (insert ivy--directory))
+  (if ivy--directory
+      (insert ivy--directory)
+    (delete-minibuffer-contents)
+    (let ((end (and ivy--directory
+                  (ivy--dirname-p (ivy-state-current ivy-last))
+                  -1)))
+    (insert (substring-no-properties
+             (ivy-state-current ivy-last) 0 end)))))
 (ivy--no-M-x #'ivy-insert-current-full #'ivy--minibuffer-p)
 
 (defcustom ivy-preferred-re-builders
