@@ -2825,6 +2825,14 @@ This concept is used to generalize regular expressions for
 
 (defvar ivy--input-garbage nil)
 
+(defvar preprocess-pcm-string t)
+(defun preprocess-pcm-string (str)
+  (if preprocess-pcm-string
+      (replace-regexp-in-string "\\([^ ]\\)-" "\\1 - " str)
+    str))
+
+;; (preprocess-pcm-string "foo-bar")
+
 (defun ivy--split (str)
   "Split STR into list of substrings bounded by spaces.
 Single spaces act as splitting points.  Consecutive spaces
@@ -2832,6 +2840,7 @@ Single spaces act as splitting points.  Consecutive spaces
 split.  This allows the literal interpretation of N spaces by
 inputting N+1 spaces.  Any substring not constituting a valid
 regexp is passed to `regexp-quote'."
+  (setq str (preprocess-pcm-string str))
   (let ((len (length str))
         (i 0)
         (start 0)
