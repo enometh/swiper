@@ -4780,7 +4780,7 @@ CANDS are the candidates to be displayed."
   (interactive)
   (ivy-read "Switch to buffer: " #'internal-complete-buffer
             :keymap ivy-switch-buffer-map
-            :preselect (buffer-name (other-buffer (current-buffer)))
+            :preselect (buffer-name (other-buffer (current-buffer) t))
             :action #'ivy--switch-buffer-action
             :matcher #'ivy--switch-buffer-matcher
             :caller 'ivy-switch-buffer))
