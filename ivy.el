@@ -2779,6 +2779,9 @@ returned by that function should be preferred over
                (setq i (previous-single-property-change i 'face str)))))
     cmn))
 
+(defvar ivy-treat-emacs-lisp-mode nil
+  "whether to frob completion-in-region differently in emacs lisp modes.")
+
 (defun ivy-completion-in-region (start end collection &optional predicate)
   "An Ivy function suitable for `completion-in-region-function'.
 The function completes the text between START and END using COLLECTION.
@@ -2831,7 +2834,8 @@ See `completion-in-region' for further information."
                  (setq initial nil)
                  (setq predicate nil)
                  (setq collection comps))
-               (unless (derived-mode-p #'emacs-lisp-mode)
+               (unless (and (derived-mode-p #'emacs-lisp-mode)
+                             ivy-treat-emacs-lisp-mode)
                  (setq collection comps)
                  (setq predicate nil))
                (ivy-read (format "(%s): " str) collection
@@ -2840,7 +2844,8 @@ See `completion-in-region' for further information."
                          ;; configurable by `ivy-initial-inputs-alist' or
                          ;; `ivy-hooks-alist'.
                          :initial-input (concat
-                                         (and (derived-mode-p #'emacs-lisp-mode)
+                                         (and ivy-treat-emacs-lisp-mode
+                                              (derived-mode-p #'emacs-lisp-mode)
                                               "^")
                                          initial)
                          :action #'ivy-completion-in-region-action
