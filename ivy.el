@@ -2706,7 +2706,8 @@ The previous string is between `ivy-completion-beg' and `ivy-completion-end'."
   (when (consp str)
     (setq str (cdr str)))
   (when (stringp str)
-    (let ((fake-cursors (and (require 'multiple-cursors-core nil t)
+    (let ((fake-cursors (and nil
+                             (require 'multiple-cursors-core nil t)
                              (mc/all-fake-cursors)))
           (pt (point))
           (beg ivy-completion-beg)
