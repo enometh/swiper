@@ -2666,7 +2666,7 @@ By default `counsel-bookmark' opens a dired buffer for directories."
 (defun counsel-bookmark ()
   "Forward to `bookmark-jump' or `bookmark-set' if bookmark doesn't exist."
   (interactive)
-  (require 'bookmark)
+  ;; (require 'bookmark)
   (ivy-read "Create or jump to bookmark: "
             (bookmark-all-names)
             :history 'bookmark-history
@@ -2718,7 +2718,7 @@ By default `counsel-bookmark' opens a dired buffer for directories."
 With a prefix argument, this command creates a new bookmark which points
 to the current value of `default-directory'."
   (interactive)
-  (require 'bookmark)
+  ;;(require 'bookmark)
   (ivy-read "Bookmarked directory: " (counsel--bookmarked-dirs)
             :caller 'counsel-bookmarked-directory
             :action #'dired))
